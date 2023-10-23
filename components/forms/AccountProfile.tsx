@@ -1,11 +1,13 @@
 "use client";
 
-import { ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import Image from "next/image";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserValidation } from "@/lib/validations/user";
+import { isBase64Image } from "@/lib/utils";
+import { useUploadThing } from "@/lib/uploadthing";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -30,6 +32,10 @@ interface Props {
 }
 
 function AccountProfile({ user, btnTitle }: Props) {
+
+    const [files, setFiles] = useState<File[]>([]);
+    const { startUpload } = useUploadThing("media");
+
     const form = useForm({
         resolver: zodResolver(UserValidation),
         defaultValues: {
@@ -41,17 +47,40 @@ function AccountProfile({ user, btnTitle }: Props) {
     });
 
     const handleImage = (
-        e: ChangeEvent, 
+        e: ChangeEvent<HTMLInputElement>, 
         fieldChange: (value: string) => void
     ) => {
         e.preventDefault();
+
+        const fileReader = new FileReader();
+
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+    
+            setFiles(Array.from(e.target.files));
+            if (!file.type.includes('image')) return;
+
+            fileReader.onload = async event => {
+                const imageURL = event.target?.result?.toString() || '';
+                fieldChange(imageURL);
+            }
+            fileReader.readAsDataURL(file);
+        }
     };
 
-    function onSubmit(values: z.infer<typeof UserValidation>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values);
-    }
+    const onSubmit = async (values: z.infer<typeof UserValidation>) => {
+        const blob = values.profile_photo;
+        const hasImageCnanged = isBase64Image(blob);
+
+        if (!hasImageCnanged) return;
+
+        const imgRes = await startUpload(files);
+        if (imgRes && imgRes[0].fileUrl) {
+            values.profile_photo = imgRes[0].fileUrl;
+        }
+
+        // TODO: Update user profile
+    };
 
     return (
         <Form {...form}>
@@ -65,7 +94,7 @@ function AccountProfile({ user, btnTitle }: Props) {
                     render={({ field }) => (
                         <FormItem className="flex items-center gap-4">
                             <FormLabel className="account-form_image-label">
-                                {field.value? (
+                                {field.value ? (
                                     <Image 
                                         src={field.value}
                                         alt="profile photo"
@@ -74,7 +103,7 @@ function AccountProfile({ user, btnTitle }: Props) {
                                         className="rounded-full object-contain"
                                         priority
                                     />
-                                ): (
+                                ) : (
                                     <Image 
                                         src="/assets/profile.svg"
                                         alt="profile photo"
