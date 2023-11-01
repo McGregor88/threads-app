@@ -33,7 +33,8 @@ function ThreadCard({
     author,
     comminity,
     createdAt,
-    comments
+    comments,
+    isComment
 }: Props) {
     return (
         <article className="w-full flex flex-col rounded-x1 bg-dark-2 p-7">
@@ -102,6 +103,13 @@ function ThreadCard({
                                     className="cursor-pointer object-contain"
                                 />
                             </div>
+                            {isComment && comments?.length && (
+                                <Link href={`/thread/${id}`}>
+                                    <p className="mt-1 text-subtle-medium text-gray-1">
+                                        {comments.length} replies
+                                    </p>
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </div>
