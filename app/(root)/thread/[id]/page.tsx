@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { fetchThreadById } from "@/lib/actions/thread.actions";
 import ThreadCard from "@/components/cards/ThreadCard";
+import Comment from "@/components/forms/Comment";
 
 async function Page({ params }: {params: { id: string }}) {
     if (!params.id) return null;
@@ -23,7 +24,7 @@ async function Page({ params }: {params: { id: string }}) {
             <div>
                 <ThreadCard
                     id={thread._id}
-                    currentUserId={user?.id || ''}
+                    currentUserId={user?.id || ""}
                     parentId={thread.parentId}
                     content={thread.text}
                     author={thread.author}
@@ -31,6 +32,29 @@ async function Page({ params }: {params: { id: string }}) {
                     createdAt={thread.createdAt}
                     comments={thread.children}
                 />
+            </div>
+            <div className="mt-7">
+                <Comment
+                    threadId={thread.id}
+                    currentUserImg={userInfo.image} 
+                    currentUserId={JSON.stringify(userInfo._id)}
+                />
+            </div>
+            <div className="mt-10">
+                {thread.children.map((child: any) =>(
+                    <ThreadCard
+                        key={child._id}
+                        id={child._id}
+                        currentUserId={child?.id || ""}
+                        parentId={child.parentId}
+                        content={child.text}
+                        author={child.author}
+                        comminity={child.comminity}
+                        createdAt={child.createdAt}
+                        comments={child.children}
+                        isComment
+                    />
+                ))}
             </div>
         </section>
     );
