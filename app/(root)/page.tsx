@@ -17,17 +17,17 @@ async function Home() {
                     </p>
                 ) : (
                     <>
-                        {result.threads.map(item => (
+                        {result.threads.map(thread => (
                             <ThreadCard
-                                key={item._id}
-                                id={item._id}
+                                key={thread._id}
+                                id={thread._id}
                                 currentUserId={user?.id || ''}
-                                parentId={item.parentId}
-                                content={item.text}
-                                author={item.author}
-                                comminity={item.comminity}
-                                createdAt={item.createdAt}
-                                comments={item.children}
+                                parentId={thread.parentId}
+                                content={thread.text}
+                                author={thread.author}
+                                comminity={thread.comminity}
+                                createdAt={thread.createdAt}
+                                comments={thread.children}
                             />
                         ))}
                     </>

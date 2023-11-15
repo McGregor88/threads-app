@@ -19,9 +19,9 @@ export async function createThread({
     communityId,
     path
 }: Params) {
-    try {
-        connectToDB();
+    connectToDB();
 
+    try {
         const createdThread = await Thread.create({
             text,
             author,
@@ -42,42 +42,46 @@ export async function createThread({
 export async function fetchThreads(pageNumber = 1, pageSize = 20) {
     connectToDB();
 
-    // Calculate the number of posts to skip
-    const skipAmount = (pageNumber - 1) * pageSize;
+    try {
+        // Calculate the number of posts to skip
+        const skipAmount = (pageNumber - 1) * pageSize;
 
-    const threadsQuery = Thread
-        .find({
-            parentId: { $in: [null, undefined] }
-        })
-        .sort({
-            createdAt: 'desc'
-        })
-        .skip(skipAmount)
-        .limit(pageSize)
-        .populate({
-            path: 'author',
-            model: User
-        })
-        .populate({
-            path: 'children',
-            populate: {
+        const threadsQuery = Thread
+            .find({
+                parentId: { $in: [null, undefined] }
+            })
+            .sort({
+                createdAt: 'desc'
+            })
+            .skip(skipAmount)
+            .limit(pageSize)
+            .populate({
                 path: 'author',
-                model: User,
-                select: '_id name parentId image'
-            }
+                model: User
+            })
+            .populate({
+                path: 'children',
+                populate: {
+                    path: 'author',
+                    model: User,
+                    select: '_id name parentId image'
+                }
+            });
+
+        const totalThreadsCount = await Thread.countDocuments({
+            parentId: { $in: [null, undefined] }
         });
 
-    const totalThreadsCount = await Thread.countDocuments({
-        parentId: { $in: [null, undefined] }
-    });
+        const threads = await threadsQuery.exec();
+        const isNext = totalThreadsCount > skipAmount + threads.length;
 
-    const threads = await threadsQuery.exec();
-    const isNext = totalThreadsCount > skipAmount + threads.length;
-
-    return {
-        threads,
-        isNext
-    };
+        return {
+            threads,
+            isNext
+        };
+    } catch (error: any) {
+        throw new Error(`Failed to fetch threads: ${error.message}`);
+    }
 }
 
 export async function fetchThreadById(id: string) {
@@ -147,5 +151,28 @@ export async function addCommentToThread(
         revalidatePath(path); 
     } catch (error: any) {
         throw new Error(`Error adding comment to thread: ${error.message}`);
+    }
+}
+
+export async function fetchUserThreads(userId: string) {
+    connectToDB();
+
+    try {
+        // Find all threads authored by user with the given userId
+        // TODO: Populate community
+        const threads = await User.findOne({ id: userId })
+            .populate({
+                path: 'threads',
+                model: Thread,
+                populate: {
+                    path: 'author',
+                    model: User,
+                    select: 'name image id'
+                }
+            });
+
+        return threads;
+    } catch (error: any) {
+        throw new Error(`Failed to fetch user threads: ${error.message}`);
     }
 }
