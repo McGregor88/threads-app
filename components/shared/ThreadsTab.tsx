@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { fetchUserThreads } from "@/lib/actions/thread.actions";
+import { fetchUserThreads } from "@/lib/actions/user.actions";
 import ThreadCard from "../cards/ThreadCard";
 
 interface Props {
