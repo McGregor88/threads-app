@@ -160,6 +160,6 @@ export async function fetchActivities (userId: string) {
         
         return replies;
     } catch (error: any) {
-        throw new Error(`Failed to fetch activity: ${error.message}`);
+        throw new Error(`Failed to fetch activities: ${error.message}`);
     }
 }

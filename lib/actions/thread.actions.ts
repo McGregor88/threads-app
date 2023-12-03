@@ -35,7 +35,7 @@ export async function createThread({
     
         revalidatePath(path);
     } catch (error: any) {
-        throw new Error(`Failed to created thread: ${error.message}`);
+        throw new Error(`Failed to create thread: ${error.message}`);
     }
 };
 
