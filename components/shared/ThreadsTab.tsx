@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { fetchUserThreads } from "@/lib/actions/user.actions";
+import { fetchCommunityThreads } from "@/lib/actions/community.actions";
 import ThreadCard from "../cards/ThreadCard";
 
 interface Props {
@@ -14,7 +15,14 @@ async function ThreadsTab({
     accountId,
     accountType
 }: Props) {
-    const result = await fetchUserThreads(accountId);
+    let result: any;
+
+    if (accountType === "Community") {
+        result = await fetchCommunityThreads(accountId);
+    } else {
+        result = await fetchUserThreads(accountId);
+    }
+    
     if (!result) redirect('/');
 
     return (
@@ -39,7 +47,7 @@ async function ThreadsTab({
                                 id: thread.author.id, 
                             }
                     }
-                    comminity={thread.comminity} // TODO: update
+                    community={thread.community} // TODO: update
                     createdAt={thread.createdAt}
                     comments={thread.children}
                 />

@@ -25,7 +25,7 @@ async function Home() {
                                 parentId={thread.parentId}
                                 content={thread.text}
                                 author={thread.author}
-                                comminity={thread.comminity}
+                                community={thread.community}
                                 createdAt={thread.createdAt}
                                 comments={thread.children}
                             />
