@@ -1,3 +1,8 @@
+// [id] - динамическая папка
+// In the [id] folder, create a new file page.tsx. 
+// This file is where we will have the logic to display the details of each community 
+// when a user navigates to the specific product through its ID.
+
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { 

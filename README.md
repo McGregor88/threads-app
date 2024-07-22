@@ -1,8 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-# Threads app
+# Threads
 
-## Full Stack MERN Next.js 13 Threads App | React, Next JS, TypeScript, MongoDB
+## Full Stack App | React, Next JS (13), TypeScript, MongoDB
+
+## Visit - https://threads-nine-lovat.vercel.app/
 
 ## Getting Started
 

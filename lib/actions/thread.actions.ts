@@ -1,4 +1,8 @@
-"use server";
+// Чтобы вызвать серверное действие в клиентском компоненте
+// нужно добавить директиву "use server" 
+// Все функции в файле будут помечены как серверные действия, 
+// которые могут быть повторно использованы как в клиентском, так и в серверном компонентах
+"use server"; 
 
 import { revalidatePath } from "next/cache";
 
@@ -68,6 +72,7 @@ export async function fetchThreads(pageNumber = 1, pageSize = 20) {
             })
             .skip(skipAmount)
             .limit(pageSize)
+            // заполнить
             .populate({
                 path: 'author',
                 model: User
