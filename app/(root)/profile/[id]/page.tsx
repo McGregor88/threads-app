@@ -12,6 +12,7 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { profileTabs } from "@/constants";
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import ThreadsTab from "@/components/shared/ThreadsTab";
+import DefaultTab from "@/components/shared/DefaultTab";
 
 async function Page(
     { params }: { params: { id: string }}
@@ -69,11 +70,16 @@ async function Page(
                             value={tab.value}
                             className="w-full text-light-1"
                         >
-                            <ThreadsTab
-                                currentUserId={user.id} 
-                                accountId={userInfo.id}
-                                accountType="User"
-                            />
+                            {tab.label === "Threads" ? (
+                                <ThreadsTab
+                                    currentUserId={user.id} 
+                                    accountId={userInfo.id}
+                                    accountType="User"
+                                />
+                            ) : (
+                                <DefaultTab name={tab.label} />
+                            )}
+
                         </TabsContent>
                     ))}
                 </Tabs>

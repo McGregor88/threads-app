@@ -1,8 +1,3 @@
-// [id] - динамическая папка
-// In the [id] folder, create a new file page.tsx. 
-// This file is where we will have the logic to display the details of each community 
-// when a user navigates to the specific product through its ID.
-
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { 
@@ -16,6 +11,7 @@ import { fetchCommunityDetails } from "@/lib/actions/community.actions";
 import { communityTabs } from "@/constants";
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import ThreadsTab from "@/components/shared/ThreadsTab";
+import DefaultTab from "@/components/shared/DefaultTab";
 import UserCard from "@/components/cards/UserCard";
 
 async function Page(
@@ -100,11 +96,7 @@ async function Page(
                         value="requests"
                         className="w-full text-light-1"
                     >
-                        <ThreadsTab
-                            currentUserId={user.id} 
-                            accountId={communityDetails._id}
-                            accountType="Community"
-                        />
+                        <DefaultTab name="Requests"/>
                     </TabsContent>
 
                 </Tabs>

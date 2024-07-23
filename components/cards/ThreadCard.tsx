@@ -74,14 +74,18 @@ function ThreadCard({
 
                         <div className={`${isComment && 'mb-10'} mt-5 flex flex-col gap-3`}>
                             <div className="flex gap-3.5">
+                                {/* TODO: Сделать лайки */}
                                 <Image
                                     src="/assets/heart-gray.svg"
                                     alt="heart"
                                     width={24}
                                     height={24}
-                                    className="cursor-pointer object-contain"
+                                    className="cursor-default object-contain"
                                 />
-                                <Link href={`/thread/${id}`}>
+                                <Link 
+                                    href={`/thread/${id}`} 
+                                    className="flex items-center"
+                                >
                                     <Image
                                         src="/assets/reply.svg"
                                         alt="reply"
@@ -89,20 +93,25 @@ function ThreadCard({
                                         height={24}
                                         className="cursor-pointer object-contain"
                                     />
+                                    <span className="text-small-regular text-light-2">
+                                        {comments?.length ? comments.length : ''}
+                                    </span>
                                 </Link>
+                                {/* TODO: Сделать репосты */}
                                 <Image
                                     src="/assets/repost.svg"
                                     alt="repost"
                                     width={24}
                                     height={24}
-                                    className="cursor-pointer object-contain"
+                                    className="cursor-default object-contain"
                                 />
+                                {/* TODO: Доделать */}
                                 <Image
                                     src="/assets/share.svg"
                                     alt="share"
                                     width={24}
                                     height={24}
-                                    className="cursor-pointer object-contain"
+                                    className="cursor-default object-contain"
                                 />
                             </div>
                             {isComment && comments?.length && (

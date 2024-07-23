@@ -1,6 +1,6 @@
 # Threads
 
-Full Stack App | React, Next JS (13), TypeScript, MongoDB
+Full Stack App | React, Next JS, TypeScript, MongoDB
 
 ## The app is deployed on Vercel
 

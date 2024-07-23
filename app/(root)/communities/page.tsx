@@ -1,7 +1,7 @@
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
+import { fetchUser } from "@/lib/actions/user.actions";
 import { fetchCommunities } from "@/lib/actions/community.actions";
 
 import CommunityCard from "@/components/cards/CommunityCard";
@@ -28,7 +28,7 @@ async function Page() {
                 Search
             </h1>
 
-            {/* Search bar */}
+            {/* TODO: Search bar */}
 
             <div className="mt-14 flex flex-col gap-9">
                 {communities.length === 0 ? (

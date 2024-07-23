@@ -1,7 +1,3 @@
-// Чтобы вызвать серверное действие в клиентском компоненте
-// нужно добавить директиву "use server" 
-// Все функции в файле будут помечены как серверные действия, 
-// которые могут быть повторно использованы как в клиентском, так и в серверном компонентах
 "use server"; 
 
 import { revalidatePath } from "next/cache";
@@ -35,7 +31,8 @@ export async function createThread({
         const createdThread = await Thread.create({
             text,
             author,
-            community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
+            // Assign communityId if provided, or leave it null for personal account
+            community: communityIdObject, 
         });
     
         // Update user model
@@ -132,7 +129,8 @@ export async function fetchThreadById(id: string) {
                 path: 'community',
                 model: Community,
                 select: '_id id name image',
-            }) // Populate the community field with _id and name
+            }) 
+            // Populate the community field with _id and name
             .populate({
                 path: 'children',
                 populate: [{
