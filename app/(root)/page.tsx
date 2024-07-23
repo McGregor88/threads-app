@@ -1,6 +1,3 @@
-// Route groups can be created by wrapping a folder in parenthesis: (folder Name)
-// Это означает, что папка предназначена для организационных целей и не должна быть включена в URL-адрес маршрута.
-
 import { currentUser } from "@clerk/nextjs";
 
 import { fetchThreads } from "@/lib/actions/thread.actions";
