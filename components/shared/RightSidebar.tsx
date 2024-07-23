@@ -1,7 +1,7 @@
 function RightSidebar() {
     return (
         <section className="custom-scrollbar rightsidebar">
-            <div className="flex flex-1 flex-col justify-start">
+            <div className="px-10 flex flex-1 flex-col justify-start border-b border-dark-1">
                 <h3 className="text-heading4-medium text-light-1">
                     Suggested Communities
                 </h3>
@@ -9,7 +9,7 @@ function RightSidebar() {
                     In pocess...
                 </p>
             </div>
-            <div className="flex flex-1 flex-col justify-start">
+            <div className="px-10 flex flex-1 flex-col justify-start">
                 <h3 className="text-heading4-medium text-light-1">
                     Suggested Users
                 </h3>

@@ -1,10 +1,10 @@
 # Threads
 
+Full Stack App | React, Next JS (13), TypeScript, MongoDB
+
 ## The app is deployed on Vercel
 
 Visit - [https://threads-nine-lovat.vercel.app/](https://threads-nine-lovat.vercel.app/)
-
-## Full Stack App | React, Next JS (13), TypeScript, MongoDB
 
 ## Getting Started
 
